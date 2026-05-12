@@ -1,11 +1,13 @@
 import socket
+import os
+
 
 # إنشاء السيرفر
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # IP + PORT
 host = "0.0.0.0"
-port = 12345
+port = int(os.environ.get("PORT", 12345))
 
 # ربط السيرفر
 server.bind((host, port))
@@ -22,14 +24,18 @@ print(f"Connected with: {client_address}")
 
 # استقبال وإرسال رسائل
 while True:
+    try:
+        msg = client_socket.recv(1024).decode()
+        if not msg:
+            break
 
-    message = client_socket.recv(1024).decode()
+        print("Friend:", msg)
 
-    if not message:
+        reply = input("You: ")
+        client_socket.send(reply.encode())
+
+    except:
+        print("Connection closed by client")
         break
 
-    print("Friend:", message)
-
-    reply = input("You: ")
-
-    client_socket.send(reply.encode())
+client_socket.close()
