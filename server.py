@@ -1,3 +1,4 @@
+"""
 import socket
 import os
 
@@ -39,6 +40,7 @@ while True:
 
     print("Connection closed")
 """
+
 import socket
 import os
 
@@ -81,4 +83,3 @@ while True:
 
 client_socket.close()
 
-"""
