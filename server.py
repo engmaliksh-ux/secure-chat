@@ -1,10 +1,15 @@
 import socket
+import os
 
 host = "0.0.0.0"
-port = 12345
+port = int(os.environ.get("PORT", 12345))
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 server.bind((host, port))
+
 server.listen()
 
 print("Server started... Waiting for connections")
@@ -31,8 +36,8 @@ while True:
             break
 
     client.close()
-    print("Connection closed")
 
+    print("Connection closed")
 """
 import socket
 import os
